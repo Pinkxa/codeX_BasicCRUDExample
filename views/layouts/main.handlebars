@@ -1,13 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title></title>
-	<link rel="stylesheet" type="text/css" href="/style.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Pretty</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link href='http://fonts.googleapis.com/css?family=Handlee' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<div id="container">
-	{{{body}}}
-</div>
-	
+
+  <h1>Welcome to <br> Pretty's Spaza Shop</h1>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+                
+                <li>
+                    <a href="/products"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Products</a>
+                </li>
+                <li>
+                    <a href="/categories"><span class="fa-stack fa-lg pull-left"><i class="fa fa-youtube-play fa-stack-1x "></i></span>Categories</a>
+                </li>
+                <li>
+                    <a href="/sales"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Sales</a>
+                </li>
+                <li>
+                    <a href="purchases"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>Purchases</a>
+                </li>
+                <li>
+                    <a href="suppliers"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Suppliers</a>
+                </li>
+            </ul>
+        </div><!-- /#sidebar-wrapper -->
+
+            <div id="container">
+               {{{body}}}
+            </div> 
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/sidebar_menu.js"></script>
 </body>
-</html>	
+</html>
+
+  
+  

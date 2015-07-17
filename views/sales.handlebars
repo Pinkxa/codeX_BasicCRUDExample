@@ -1,0 +1,26 @@
+<h2>Sales</h2>
+
+{{#sales}}
+  <h3>{{name}}</h3>
+  <button><a href="/sales/edit/{{id}}">Edit</a></butto>
+  <button><a href="/sales/delete/{{id}}">Delete</a></button>
+{{/sales}}
+
+{{#empty}}
+  <p>The list is empty.</p>
+{{/empty}}
+
+<div id="add">
+	
+	<h2>Add a sale</h2>
+	<form action="sales/add" method="POST">
+	    Date: <input type="date" name="date">	
+		Name: <input type="text" name="name">	
+		Price: <input type="price" name="price">	
+		Quantity: <input type="number" name="quantity">
+
+		<br >
+
+		<input type="submit">
+	</form>
+</div>

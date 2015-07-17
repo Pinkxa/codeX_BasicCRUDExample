@@ -1,0 +1,20 @@
+<h2>Suppliers</h2>
+
+{{#suppliers}}
+  <h3>{{name}}</h3>
+  <button><a href="/suppliers/edit/{{id}}">Edit</a></butto>
+  <button><a href="/suppliers/delete/{{id}}">Delete</a></button>
+{{/suppliers}}
+
+{{#empty}}
+  <p>The list is empty.</p>
+{{/empty}}
+
+<div id="add">
+	
+	<h2>Add a supplier</h2>
+	<form action="suppliers/add" method="POST">
+		Name: <input type="text" name="name">	
+		<input type="submit">
+	</form>
+</div>

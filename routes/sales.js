@@ -9,17 +9,13 @@ exports.show = function (req, res, next) {
 	req.getConnection(function(err, connection){
 		if (err) 
 			return next(err);
-		connection.query('SELECT * from products', [], function(err, results) {
-        	var products = results
-        	connection.query('SELECT * from categories', [], function(err, results){
-        		if (err) return next(err);
+		connection.query('SELECT * from sales', [], function(err, results) {
+        	if (err) return next(err);
 
-    		       res.render( 'home', {
-    			      products : products,
-    			      categories : results
-    		       });
-        	})
-       });
+    		res.render( 'sales', {
+    			sales : results
+    		});
+      });
 	});
 };
 
@@ -32,12 +28,16 @@ exports.add = function (req, res, next) {
 		var input = JSON.parse(JSON.stringify(req.body));
 		var data = {
             		name : input.name,
+            		date : input.date,
+            		quantity : input.quantity,
+            		price : input.price,
+
         	};
-		connection.query('insert into products set ?', data, function(err, results) {
+		connection.query('insert into sales set ?', data, function(err, results) {
         		if (err)
               			console.log("Error inserting : %s ",err );
          
-          		res.redirect('/products');
+          		res.redirect('/sales');
       		});
 	});
 };
@@ -45,7 +45,7 @@ exports.add = function (req, res, next) {
 exports.get = function(req, res, next){
 	var id = req.params.id;
 	req.getConnection(function(err, connection){
-		connection.query('SELECT * FROM products WHERE id = ?', [id], function(err,rows){
+		connection.query('SELECT * FROM sales WHERE id = ?', [id], function(err,rows){
 			if(err){
     				console.log("Error Selecting : %s ",err );
 			}
@@ -59,11 +59,11 @@ exports.update = function(req, res, next){
 	var data = JSON.parse(JSON.stringify(req.body));
     	var id = req.params.id;
     	req.getConnection(function(err, connection){
-    		connection.query('UPDATE products SET ? WHERE id = ?', [data, id], function(err, rows){
+    		connection.query('UPDATE sales SET ? WHERE id = ?', [data, id], function(err, rows){
     			if (err){
               			console.log("Error Updating : %s ",err );
     			}
-          		res.redirect('/products');
+          		res.redirect('/sales');
     		});
     		
     });
@@ -72,11 +72,11 @@ exports.update = function(req, res, next){
 exports.delete = function(req, res, next){
 	var id = req.params.id;
 	req.getConnection(function(err, connection){
-		connection.query('DELETE FROM products WHERE id = ?', [id], function(err,rows){
+		connection.query('DELETE FROM sales WHERE id = ?', [id], function(err,rows){
 			if(err){
     				console.log("Error Selecting : %s ",err );
 			}
-			res.redirect('/products');
+			res.redirect('/sales');
 		});
 	});
 };

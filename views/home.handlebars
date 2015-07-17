@@ -1,21 +1,30 @@
-<h1>Products</h1>
+<h2>Products</h2>
 
 {{#products}}
-  <h2>{{description}}</h2>
-  <a href="/products/edit/{{id}}">Edit</a>
-  <a href="/products/delete/{{id}}">Delete</a>
+  <h3>{{name}}</h3>
+     <div class="btn-group" role="group" aria-label="...">
+        <button type="button" class="btn btn-default"><a href="/products/edit/{{id}}">Edit</a>
+        <button type="button" class="btn btn-default"><a href="/products/delete/{{id}}">Delete</a>
+  </div>
+  
 {{/products}}
 
 {{#empty}}
   <p>The list is empty.</p>
 {{/empty}}
 
-<div id="add-products">
+<div id="add">
 	
-	<h1>Add a product</h1>
+	<h2>Add a product</h2>
 	<form action="products/add" method="POST">
-		Description: <input type="text" name="description">	
+		Name: <input type="text" name="name">	
 		<input type="submit">
 	</form>
+	<br>
+ <select name="categories/add" form="categories">
+  {{#each categories}}
+     <option value="{{id}}">{{name}}</option>
+  {{/each}}
+ </select
 </div>
 

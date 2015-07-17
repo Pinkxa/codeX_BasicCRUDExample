@@ -1,0 +1,20 @@
+<h2>Categories</h2>
+
+{{#categories}}
+  <h3>{{name}}</h3>
+  <button><a href="/categories/edit/{{id}}">Edit</a></butto>
+  <button><a href="/categories/delete/{{id}}">Delete</a></button>
+{{/categories}}
+
+{{#empty}}
+  <p>The list is empty.</p>
+{{/empty}}
+
+<div id="add">
+	
+	<h2>Add a category</h2>
+	<form action="categories/add" method="POST">
+		Name: <input type="text" name="name">	
+		<input type="submit">
+	</form>
+</div>

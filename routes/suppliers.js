@@ -9,17 +9,13 @@ exports.show = function (req, res, next) {
 	req.getConnection(function(err, connection){
 		if (err) 
 			return next(err);
-		connection.query('SELECT * from products', [], function(err, results) {
-        	var products = results
-        	connection.query('SELECT * from categories', [], function(err, results){
-        		if (err) return next(err);
+		connection.query('SELECT * from suppliers', [], function(err, results) {
+        	if (err) return next(err);
 
-    		       res.render( 'home', {
-    			      products : products,
-    			      categories : results
-    		       });
-        	})
-       });
+    		res.render( 'suppliers', {
+    			suppliers : results
+    		});
+      });
 	});
 };
 
@@ -33,11 +29,11 @@ exports.add = function (req, res, next) {
 		var data = {
             		name : input.name,
         	};
-		connection.query('insert into products set ?', data, function(err, results) {
+		connection.query('insert into suppliers set ?', data, function(err, results) {
         		if (err)
               			console.log("Error inserting : %s ",err );
          
-          		res.redirect('/products');
+          		res.redirect('/suppliers');
       		});
 	});
 };
@@ -45,7 +41,7 @@ exports.add = function (req, res, next) {
 exports.get = function(req, res, next){
 	var id = req.params.id;
 	req.getConnection(function(err, connection){
-		connection.query('SELECT * FROM products WHERE id = ?', [id], function(err,rows){
+		connection.query('SELECT * FROM suppliers WHERE id = ?', [id], function(err,rows){
 			if(err){
     				console.log("Error Selecting : %s ",err );
 			}
@@ -59,11 +55,11 @@ exports.update = function(req, res, next){
 	var data = JSON.parse(JSON.stringify(req.body));
     	var id = req.params.id;
     	req.getConnection(function(err, connection){
-    		connection.query('UPDATE products SET ? WHERE id = ?', [data, id], function(err, rows){
+    		connection.query('UPDATE suppliers SET ? WHERE id = ?', [data, id], function(err, rows){
     			if (err){
               			console.log("Error Updating : %s ",err );
     			}
-          		res.redirect('/products');
+          		res.redirect('/suppliers');
     		});
     		
     });
@@ -72,11 +68,11 @@ exports.update = function(req, res, next){
 exports.delete = function(req, res, next){
 	var id = req.params.id;
 	req.getConnection(function(err, connection){
-		connection.query('DELETE FROM products WHERE id = ?', [id], function(err,rows){
+		connection.query('DELETE FROM suppliers WHERE id = ?', [id], function(err,rows){
 			if(err){
     				console.log("Error Selecting : %s ",err );
 			}
-			res.redirect('/products');
+			res.redirect('/suppliers');
 		});
 	});
 };
