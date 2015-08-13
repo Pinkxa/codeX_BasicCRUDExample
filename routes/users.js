@@ -2,14 +2,21 @@
 /***
  * A very basic CRUD example using MySQL
  */	
-
+exports.userCheck = function  (req, res, next) {
+	if(req.session.user){
+		next();
+	}
+	else{
+		res.redirect("/");
+	}
+};
 //todo - fix the error handling
 
 exports.show = function (req, res, next) {
 	req.getConnection(function(err, connection){
 		if (err) 
 			return next(err);
-		connection.query('SELECT id, Username, Password, Role from users', [], function(err, results) {
+		connection.query('SELECT * from users', [], function(err, results) {
         	if (err) return next(err);
 
     		res.render( 'users', {
@@ -31,7 +38,9 @@ exports.add = function (req, res, next) {
         console.log(input);
 
 		var data = {
-            		Username : input.Username
+            		Username : input.username,
+            		Password : input.password,
+            		Role : "normalUser"
         	};
 
         	console.log("***********************");
@@ -41,7 +50,7 @@ exports.add = function (req, res, next) {
         		if (err)
               			console.log("Error inserting : %s ",err );
          
-          		res.redirect('/users');
+          		res.redirect('/');
       		});
 	});
 };

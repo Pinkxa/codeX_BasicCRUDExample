@@ -144,26 +144,21 @@ body{
 
       <div class="grid__container">
 
-       <form action="" method="post" class="form form--register">
+      <form action="/users/add" method="post" class="form form--register">
         <h1>Register</h1>
         <div class="form__field">
           <label class="fontawesome-user" for="register__username"><span class="hidden">Username</span></label>
-          <input id="register__username" type="text" class="form__input" placeholder="Username" required>
+          <input id="register__username" name="username" type="text" class="form__input" placeholder="Username" required>
         </div>
 
         <div class="form__field">
           <label class="fontawesome-lock" for="register__password"><span class="hidden">Password</span></label>
-          <input id="register__password" type="password" class="form__input" placeholder="Password"/>
-        </div>
-
-        <div class="form__field">
-          <label class="fontawesome-lock" for="register__password"><span class="hidden">Confirm Password</span></label>
-          <input id="register__password" type="password" class="form__input" placeholder="Confirm Password"/>
+          <input id="register__password" name="password" type="password" class="form__input" placeholder="Password"/>
         </div>
 
         <div class="form__field">
           <input type="submit" value="Register">
-        </div>
+        </div> 
 
       </form>
     

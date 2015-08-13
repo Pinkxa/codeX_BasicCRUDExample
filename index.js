@@ -36,11 +36,76 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 //session setup
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
+app.use(session({ secret: 'keyboard cat',  resave: false,
+  saveUninitialized: true,cookie: { maxAge: 60000 }}));
 
+app.get('/register', function (req, res,next){
+  res.render('register', {layout: false});
+});
 
 // Setting up main route
 app.get('/', function (req, res) {
+  // Default route returns index.jade
+  res.render('login',{layout: false});
+});
+
+app.post('/login', function (req, res) {
+  var input = JSON.parse(JSON.stringify(req.body));
+   var data = {
+                username : input.username,
+                Password : input.password,
+                Role : "normalUser"
+          };
+    req.getConnection(function(err, connection){
+    if (err) 
+      return err;
+    connection.query('SELECT * from users where Username = ?', [data], function(err, results) {
+          if (err) return err;
+    console.log(Username)
+         if(data.username == Username){
+  res.render('/users',{
+  username:Username,
+  password:Password,
+  Role:Role
+
+  });
+}
+  else{
+    res.redirect("/");
+  }
+      });
+  });
+   
+ //var user = users;
+
+});
+
+//setup middleware
+/*app.use(function(req, res, next){
+  console.log('in my middleware...');
+  //proceed to the next middleware component
+  //next();
+  console.log(req.path);
+
+  if (req.session.user || req.path === "/login"){
+    return next();
+  }
+  // the user is not logged in redirect him to the login page
+  res.redirect('/login');
+
+});*/
+
+app.get('/logout', function (req, res) {
+  // Default route returns index.jade
+  //res.render('Pretty');
+  delete req.session.user;
+  res.redirect('/')
+});
+
+app.use(users.userCheck);
+
+// Setting up main route
+app.get('/home', function (req, res) {
   // Default route returns index.jade
   res.render('index')
 })
@@ -85,52 +150,13 @@ app.post('/suppliers/add', suppliers.add);
 //this should be a post but this is only an illustration of CRUD - not on good practices
 app.get('/suppliers/delete/:id', suppliers.delete);
 
-app.get('/register', function (req, res){
-  res.render('register', {layout: false});
-});
-
-// Setting up main route
-app.get('/login', function (req, res) {
-  // Default route returns index.jade
-  res.render('login',{layout: false});
-});
-
-app.post('/login', function (req, res) {
-  // Default route returns index.jade
-  //res.render('Pretty');
-  req.session.user = {};
-  res.redirect('/categories')
-});
-
-//setup middleware
-app.use(function(req, res, next){
-  console.log('in my middleware...');
-  //proceed to the next middleware component
-  //next();
-  console.log(req.path);
-
-  if (req.session.user || req.path === "/login"){
-    return next();
-  }
-  // the user is not logged in redirect him to the login page
-  res.redirect('/login');
-
-});
-
-app.get('/logout', function (req, res) {
-  // Default route returns index.jade
-  //res.render('Pretty');
-  delete req.session.user;
-  res.redirect('/login')
-});
-
-/*var checkUser = function(req, res, next){
-  if (req.session.user){
-    return next();
-  }
-  // the user is not logged in redirect him to the login page
-  res.redirect('login');
-};*/
+//setup the handlers
+app.get('/users', users.show);
+app.get('/users/edit/:id', users.get);
+app.post('/users/update/:id', users.update);
+app.post('/users/add', users.add);
+//this should be a post but this is only an illustration of CRUD - not on good practices
+app.get('/users/delete/:id', users.delete);
 
 //start everything up
 app.listen(3000, function () {
