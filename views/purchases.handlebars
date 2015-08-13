@@ -1,10 +1,26 @@
+<div id = "pretty">
 <h2>Purchases</h2>
+<table border="2">
+    <thead>
+      <tr>
+        <th>ProductName</th>
+        <th>Date</th>
+        <th>SupplierName</th>
+        <th>Price</th>
+      </tr>
+    </thead>
 
 {{#purchases}}
-  <h3>{{name}}</h3>
-  <button><a href="/categories/edit/{{id}}">Edit</a></butto>
-  <button><a href="/categories/delete/{{id}}">Delete</a></button>
+<tbody>
+	<tr>
+	  <td><h3>{{name}}</h3></td>
+	  <td><h3>{{date}}</h3></td>
+	  <td><h3>{{shop}}</h3></td>
+	  <td><h3>{{price}}</h3></td>
+    </tr>
+</tbody>
 {{/purchases}}
+</table>
 
 {{#empty}}
   <p>The list is empty.</p>
@@ -14,7 +30,26 @@
 	
 	<h2>Add a purchase</h2>
 	<form action="purchases/add" method="POST">
-		Name: <input type="text" name="name">	
+	    Date: <input type="date" name="date"> <br />
+	    <br />	
+		ProductName: 
+        <select name="product_id">
+		  {{#each products}}
+		     <option value="{{id}}">{{name}}</option>
+		  {{/each}}
+		</select> <br />
+		<br />
+		<br />
+		SupplierName:	
+		<select name="supplier_id">
+		  {{#each suppliers}}
+		     <option value="{{id}}">{{shop}}</option>
+		  {{/each}}
+		</select <br />
+	    <br />
+		<br />
+		Price: <input type="number" min="0.01" step="0.01" max="2500" name="price"> <br />
 		<input type="submit">
 	</form>
+  </div>
 </div>

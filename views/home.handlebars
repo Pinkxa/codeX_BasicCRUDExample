@@ -1,13 +1,25 @@
+<div class = "pretty">
 <h2>Products</h2>
-
+<table border = "2">
+  <thead>
+      <tr>
+        <th>ProductName</th>
+        <th>CategoryName</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+  </thead>
+  <tbody>
 {{#products}}
-  <h3>{{name}}</h3>
-     <div class="btn-group" role="group" aria-label="...">
-        <button type="button" class="btn btn-default"><a href="/products/edit/{{id}}">Edit</a>
-        <button type="button" class="btn btn-default"><a href="/products/delete/{{id}}">Delete</a>
-  </div>
-  
+  <tr>
+    <td><h3>{{name}}</h3></td>
+    <td><h3>{{catname}}</h3></td>
+    <td><button type="button" class="btn btn-default"><a href="/products/edit/{{id}}">Edit</a></button></td>
+    <td><button type="button" class="btn btn-default"><a href="/products/delete/{{id}}">Delete</a></button></td>
+  </tr> 
 {{/products}}
+</tbody>
+</table>
 
 {{#empty}}
   <p>The list is empty.</p>
@@ -17,14 +29,18 @@
 	
 	<h2>Add a product</h2>
 	<form action="products/add" method="POST">
-		Name: <input type="text" name="name">	
-		<input type="submit">
+		Name: <input type="text" name="name">  
+    <select name="category_id">
+      {{#each categories}}
+        <option value="{{id}}">{{catname}}</option>
+      {{/each}}
+    </select>   
+    <input type="submit">
 	</form>
-	<br>
- <select name="categories/add" form="categories">
-  {{#each categories}}
-     <option value="{{id}}">{{name}}</option>
-  {{/each}}
- </select
+
+	<br />
+ 
+ 
+</div>
 </div>
 

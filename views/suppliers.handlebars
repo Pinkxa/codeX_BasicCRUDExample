@@ -1,10 +1,23 @@
+<div class = "pretty">
 <h2>Suppliers</h2>
-
+<table border = "2">
+	<thead>
+      <tr>
+        <th>SupplierName</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+  <tbody>
 {{#suppliers}}
-  <h3>{{name}}</h3>
-  <button><a href="/suppliers/edit/{{id}}">Edit</a></butto>
-  <button><a href="/suppliers/delete/{{id}}">Delete</a></button>
+    <tr>
+	  <td><h3>{{shop}}</h3></td>
+	  <td><button><a href="/suppliers/edit/{{id}}">Edit</a></button></td>
+	  <td><button><a href="/suppliers/delete/{{id}}">Delete</a></button></td>
+	</tr>
 {{/suppliers}}
+</tbody>
+</table>
 
 {{#empty}}
   <p>The list is empty.</p>
@@ -14,7 +27,8 @@
 	
 	<h2>Add a supplier</h2>
 	<form action="suppliers/add" method="POST">
-		Name: <input type="text" name="name">	
+		Name: <input type="text" name="shop">	
 		<input type="submit">
 	</form>
+</div>
 </div>

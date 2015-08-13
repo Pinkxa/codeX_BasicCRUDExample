@@ -10,7 +10,7 @@ body {
 h1{
 	text-align: center;
 	border: 5px solid #800080;
-	font-size: 80px;
+	font-size: 130px;
 	background-color: #990033;
 	width: 100%;
 	height: 300px; 
@@ -22,13 +22,13 @@ h2 {
      background-color: #195f77;
      border: 2px solid black;
      border-radius: 15px;
-     font-size: 30px;
+     font-size: 40px;
      width: 50%;
 }
 
 #container{
 	margin-left: 200px;
-	width: 70%;
+	width: auto;
 	height: 100%;
 	background-color: #990033;
 	margin-top: 60px;
@@ -56,7 +56,8 @@ input[type=text] {
 
 input[type=submit] {
 	padding: 13px;
-  	border: 2px solid black;  	
+  	border: 2px solid black; 
+    margin-left: 50%; 	
 };
 
 /*!
@@ -213,5 +214,14 @@ input[type=submit] {
         -o-transition: all 0.5s ease;
         transition: all 0.5s ease;
     }
+}
+
+html{
+  background-image:url("The-life-you-love.jpg");
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  background-color:purple;
+  
 }
 

@@ -1,10 +1,23 @@
+<div class = "pretty">
 <h2>Categories</h2>
-
+<table border = "2">
+	<thead>
+      <tr>
+        <th>CategoryName</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+<tbody>
 {{#categories}}
-  <h3>{{name}}</h3>
-  <button><a href="/categories/edit/{{id}}">Edit</a></butto>
-  <button><a href="/categories/delete/{{id}}">Delete</a></button>
+<tr>
+  <td><h3>{{catname}}</h3></td>
+  <td><button><a href="/categories/edit/{{id}}">Edit</a></button></td>
+  <td><button><a href="/categories/delete/{{id}}">Delete</a></button></td>
+ </tr>
 {{/categories}}
+</tbody>
+</table>
 
 {{#empty}}
   <p>The list is empty.</p>
@@ -14,7 +27,8 @@
 	
 	<h2>Add a category</h2>
 	<form action="categories/add" method="POST">
-		Name: <input type="text" name="name">	
+		Name: <input type="text" name="catname">	
 		<input type="submit">
 	</form>
+</div>
 </div>

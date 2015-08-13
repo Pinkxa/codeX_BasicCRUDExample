@@ -9,7 +9,7 @@ exports.show = function (req, res, next) {
 	req.getConnection(function(err, connection){
 		if (err) 
 			return next(err);
-		connection.query('SELECT * from categories', [], function(err, results) {
+		connection.query('SELECT id, catname from categories', [], function(err, results) {
         	if (err) return next(err);
 
     		res.render( 'categories', {
@@ -26,9 +26,17 @@ exports.add = function (req, res, next) {
 		}
 		
 		var input = JSON.parse(JSON.stringify(req.body));
+
+		console.log("***********************");
+        console.log(input);
+
 		var data = {
-            		name : input.name,
+            		catname : input.catname
         	};
+
+        	console.log("***********************");
+        	console.log(data);
+
 		connection.query('insert into categories set ?', data, function(err, results) {
         		if (err)
               			console.log("Error inserting : %s ",err );
@@ -45,7 +53,7 @@ exports.get = function(req, res, next){
 			if(err){
     				console.log("Error Selecting : %s ",err );
 			}
-			res.render('edit',{page_title:"Edit Customers - Node.js", data : rows[0]});      
+			res.render('EditCat',{page_title:"Edit Customers - Node.js", data : rows[0]});      
 		}); 
 	});
 };

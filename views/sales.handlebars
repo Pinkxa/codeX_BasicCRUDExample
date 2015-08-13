@@ -1,10 +1,26 @@
+<div id = "pretty">
 <h2>Sales</h2>
+<table border="2">
+    <thead>
+      <tr>
+        <th>ProductName</th>
+        <th>Date</th>
+        <th>Quantity</th>
+        <th>Price</th>
+      </tr>
+    </thead>
 
 {{#sales}}
-  <h3>{{name}}</h3>
-  <button><a href="/sales/edit/{{id}}">Edit</a></butto>
-  <button><a href="/sales/delete/{{id}}">Delete</a></button>
+<tbody>
+	<tr>
+	  <td><h3>{{name}}</h3></td>
+	  <td><h3>{{date}}</h3></td>
+	  <td><h3>{{quantity}}</h3></td>
+	  <td><h3>{{price}}</h3></td>
+	</tr>
+</tbody>
 {{/sales}}
+</table>
 
 {{#empty}}
   <p>The list is empty.</p>
@@ -14,13 +30,20 @@
 	
 	<h2>Add a sale</h2>
 	<form action="sales/add" method="POST">
-	    Date: <input type="date" name="date">	
-		Name: <input type="text" name="name">	
-		Price: <input type="price" name="price">	
-		Quantity: <input type="number" name="quantity">
-
-		<br >
-
+	    Date: <input type="date" name="date"> <br />
+	    <br />	
+		Name: 
+		<select name="product_id">
+		  {{#each products}}
+		     <option value="{{id}}">{{name}}</option>
+		  {{/each}}
+		</select> <br />
+	    <br />
+		<br />
+		Quantity: <input type="number" name="quantity"> <br />
+		<br />
+		Price: <input type="number" min="0.01" step="0.01" max="2500" name="price"> <br />
 		<input type="submit">
 	</form>
+  </div>
 </div>

@@ -1,22 +1,18 @@
-
-/***
- * A very basic CRUD example using MySQL
- */	
-
-//todo - fix the error handling
-
 exports.show = function (req, res, next) {
 	req.getConnection(function(err, connection){
 		if (err) 
 			return next(err);
-		connection.query('SELECT * from sales', [], function(err, results) {
+		connection.query('SELECT name, id from products', [], function(err, results1) {
+		connection.query("SELECT DATE_FORMAT(sales.date,'%d %b %y') as date, sales.product_id as id, products.name as name, sales.quantity as quantity, sales.price as price from sales, products WHERE products.id = sales.product_id group by name", [], function(err, results) {
         	if (err) return next(err);
 
     		res.render( 'sales', {
-    			sales : results
+    			sales : results,
+    			products : results1
     		});
       });
 	});
+  });
 };
 
 exports.add = function (req, res, next) {
@@ -26,13 +22,21 @@ exports.add = function (req, res, next) {
 		}
 		
 		var input = JSON.parse(JSON.stringify(req.body));
+
+        console.log("***********************");
+        console.log(input);
+
 		var data = {
-            		name : input.name,
+            		product_id : input.product_id,
             		date : input.date,
             		quantity : input.quantity,
-            		price : input.price,
+            		price : input.price
 
         	};
+
+        console.log("***********************");
+        console.log(data);
+
 		connection.query('insert into sales set ?', data, function(err, results) {
         		if (err)
               			console.log("Error inserting : %s ",err );
@@ -49,7 +53,7 @@ exports.get = function(req, res, next){
 			if(err){
     				console.log("Error Selecting : %s ",err );
 			}
-			res.render('edit',{page_title:"Edit Customers - Node.js", data : rows[0]});      
+			res.render('EditSales',{page_title:"Edit Customers - Node.js", data : rows[0]});      
 		}); 
 	});
 };
@@ -57,7 +61,15 @@ exports.get = function(req, res, next){
 exports.update = function(req, res, next){
 
 	var data = JSON.parse(JSON.stringify(req.body));
-    	var id = req.params.id;
+    var id = req.params.id;
+    var input = JSON.parse(JSON.stringify(req.body));
+        var data = {
+            		product_id : input.product_id,
+            		date : input.date,
+            		quantity : input.quantity,
+            		price : input.price
+
+        	};
     	req.getConnection(function(err, connection){
     		connection.query('UPDATE sales SET ? WHERE id = ?', [data, id], function(err, rows){
     			if (err){

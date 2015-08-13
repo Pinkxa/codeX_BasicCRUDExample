@@ -1,15 +1,17 @@
-'use strict';
+    'use strict';
 
 var express = require('express'),
     exphbs  = require('express-handlebars'),
     mysql = require('mysql'), 
     myConnection = require('express-myconnection'),
     bodyParser = require('body-parser'),
-    products = require('./routes/products');
+    Products = require('./routes/products');
 var categories = require('./routes/categories');
 var sales = require('./routes/sales');
 var purchases = require('./routes/purchases');
 var suppliers = require('./routes/suppliers');
+var session = require('express-session');
+var users = require('./routes/users');
 
 var app = express();
 
@@ -33,14 +35,23 @@ app.use(myConnection(mysql, dbOptions, 'single'));
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
+//session setup
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
+
+
+// Setting up main route
+app.get('/', function (req, res) {
+  // Default route returns index.jade
+  res.render('index')
+})
 
 //setup the handlers
-app.get('/products', products.show);
-app.get('/products/edit/:id', products.get);
-app.post('/products/update/:id', products.update);
-app.post('/products/add', products.add);
+app.get('/products', Products.show);
+app.get('/products/edit/:id', Products.get);
+app.post('/products/update/:id', Products.update);
+app.post('/products/add', Products.add);
 //this should be a post but this is only an illustration of CRUD - not on good practices
-app.get('/products/delete/:id', products.delete);
+app.get('/products/delete/:id', Products.delete);
 
 //setup the handlers
 app.get('/categories', categories.show);
@@ -74,6 +85,52 @@ app.post('/suppliers/add', suppliers.add);
 //this should be a post but this is only an illustration of CRUD - not on good practices
 app.get('/suppliers/delete/:id', suppliers.delete);
 
+app.get('/register', function (req, res){
+  res.render('register', {layout: false});
+});
+
+// Setting up main route
+app.get('/login', function (req, res) {
+  // Default route returns index.jade
+  res.render('login',{layout: false});
+});
+
+app.post('/login', function (req, res) {
+  // Default route returns index.jade
+  //res.render('Pretty');
+  req.session.user = {};
+  res.redirect('/categories')
+});
+
+//setup middleware
+app.use(function(req, res, next){
+  console.log('in my middleware...');
+  //proceed to the next middleware component
+  //next();
+  console.log(req.path);
+
+  if (req.session.user || req.path === "/login"){
+    return next();
+  }
+  // the user is not logged in redirect him to the login page
+  res.redirect('/login');
+
+});
+
+app.get('/logout', function (req, res) {
+  // Default route returns index.jade
+  //res.render('Pretty');
+  delete req.session.user;
+  res.redirect('/login')
+});
+
+/*var checkUser = function(req, res, next){
+  if (req.session.user){
+    return next();
+  }
+  // the user is not logged in redirect him to the login page
+  res.redirect('login');
+};*/
 
 //start everything up
 app.listen(3000, function () {
