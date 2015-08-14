@@ -1,4 +1,4 @@
-    'use strict';
+'use strict';
 
 var express = require('express'),
     exphbs  = require('express-handlebars'),
@@ -12,6 +12,7 @@ var purchases = require('./routes/purchases');
 var suppliers = require('./routes/suppliers');
 var session = require('express-session');
 var users = require('./routes/users');
+var cookieParser = require('cookie-parser');
 
 var app = express();
 
@@ -29,18 +30,17 @@ app.set('view engine', 'handlebars');
 
 app.use(express.static(__dirname + '/public'));
 
-//setup middleware
 app.use(myConnection(mysql, dbOptions, 'single'));
-// parse application/x-www-form-urlencoded
+app.use(cookieParser('shhhh, very secret'));
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 3600000 }, resave: true, saveUninitialized: true})); -
+app.use(express.static('public'));
+app.engine('handlebars', exphbs({defaultLayout: "main"}));
+app.set('view engine', 'handlebars');
 app.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
 app.use(bodyParser.json())
-//session setup
-app.use(session({ secret: 'keyboard cat',  resave: false,
-  saveUninitialized: true,cookie: { maxAge: 60000 }}));
 
 app.get('/register', function (req, res,next){
-  res.render('register', {layout: false});
+  res.render('register',{layout:false});
 });
 
 // Setting up main route
@@ -49,64 +49,16 @@ app.get('/', function (req, res) {
   res.render('login',{layout: false});
 });
 
-app.post('/login', function (req, res) {
-  var input = JSON.parse(JSON.stringify(req.body));
-   var data = {
-                username : input.username,
-                Password : input.password,
-                Role : "normalUser"
-          };
-    req.getConnection(function(err, connection){
-    if (err) 
-      return err;
-    connection.query('SELECT * from users where Username = ?', [data], function(err, results) {
-          if (err) return err;
-    console.log(Username)
-         if(data.username == Username){
-  res.render('/users',{
-  username:Username,
-  password:Password,
-  Role:Role
+app.post('/login', users.login); 
 
-  });
-}
-  else{
-    res.redirect("/");
-  }
-      });
-  });
-   
- //var user = users;
 
-});
-
-//setup middleware
-/*app.use(function(req, res, next){
-  console.log('in my middleware...');
-  //proceed to the next middleware component
-  //next();
-  console.log(req.path);
-
-  if (req.session.user || req.path === "/login"){
-    return next();
-  }
-  // the user is not logged in redirect him to the login page
-  res.redirect('/login');
-
-});*/
 
 app.get('/logout', function (req, res) {
-  // Default route returns index.jade
-  //res.render('Pretty');
   delete req.session.user;
   res.redirect('/')
 });
 
-app.use(users.userCheck);
-
-// Setting up main route
 app.get('/home', function (req, res) {
-  // Default route returns index.jade
   res.render('index')
 })
 
@@ -152,9 +104,10 @@ app.get('/suppliers/delete/:id', suppliers.delete);
 
 //setup the handlers
 app.get('/users', users.show);
-app.get('/users/edit/:id', users.get);
+//app.get('/users/edit/:id', users.get);
 app.post('/users/update/:id', users.update);
 app.post('/users/add', users.add);
+//app.post('/users/login', users.login);
 //this should be a post but this is only an illustration of CRUD - not on good practices
 app.get('/users/delete/:id', users.delete);
 
