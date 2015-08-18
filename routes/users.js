@@ -26,40 +26,53 @@ exports.show = function (req, res, next) {
 	});
 };
 
-exports.add = function(req, res, next) {
-        req.getConnection(function(err, connection) {
-            if (err) {
-                return next(err);
-            }
+var addUser = function(req, cb){
 
-            var input = JSON.parse(JSON.stringify(req.body));
-            var data = {
-                Username: input.username,
-                Password: input.password,
-                Role: 'normalUser' || 'adminUser'
+    req.getConnection(function(err, connection) {
+        if (err) {
+            return next(err);
+        }
 
-            };
+        var input = JSON.parse(JSON.stringify(req.body));
+        var data = {
+            Username: input.username,
+            Password: input.password,
+            Role: input.role || 'view'
+        };
 
-            //bcrypt the password===
-            bcrypt.genSalt(10, function(err, salt) {
-                bcrypt.hash(input.password, salt, function(err, hash) {
-                    // Store hash in your password DB. 
-                    data.Password = hash;
-                    connection.query('insert into users set ?', data, function(err, results) {
-                        if (err)
-                            console.log("Error inserting : %s ", err);
-
-                        res.redirect('/?status=user_created');
-
-                    });
-                });
+        //bcrypt the password===
+        bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(input.password, salt, function(err, hash) {
+                // Store hash in your password DB. 
+                data.Password = hash;
+                connection.query('insert into users set ?', data, cb);
             });
-
-
-
         });
+    });
+};
 
+exports.register = function(req, res, next) {
+
+    var registerCallback = function(err, results) {
+        if (err)
+            console.log("Error inserting : %s ", err);
+        res.redirect('/?status=user_created');
     };
+
+    addUser(req, registerCallback);
+};
+
+exports.add = function(req, res, next) {
+    
+    var addCallback = function(err, results) {
+        if (err)
+            console.log("Error inserting : %s ", err);
+
+        res.redirect('/users');
+    };
+
+    addUser(req, addCallback);
+};
 
 exports.update = function(req, res, next){
 

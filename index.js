@@ -24,10 +24,6 @@ var dbOptions = {
       database: 'Nelisa'
 };
 
-//setup template handlebars as the template engine
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
-
 app.use(express.static(__dirname + '/public'));
 
 app.use(myConnection(mysql, dbOptions, 'single'));
@@ -51,7 +47,11 @@ app.get('/', function (req, res) {
 
 app.post('/login', users.login); 
 
-
+app.use(function(req, res, next){
+  console.log('in my middleware!');
+  //proceed to the next middleware component
+  next();
+});
 
 app.get('/logout', function (req, res) {
   delete req.session.user;
@@ -62,6 +62,21 @@ app.get('/home', function (req, res) {
   res.render('index')
 })
 
+var userCheck = function(req, res, next){
+  if (req.session.user){
+    return next();
+  }
+  // the user is not logged in redirect him to the login page
+  else{
+  res.redirect('/');
+   }
+};
+
+/*app.get('/users', checkUser, function(req, res){
+  var userData = userService.getUserData();
+  res.render('users', userData)
+});
+*/
 //setup the handlers
 app.get('/products', Products.show);
 app.get('/products/edit/:id', Products.get);
@@ -106,6 +121,7 @@ app.get('/suppliers/delete/:id', suppliers.delete);
 app.get('/users', users.show);
 //app.get('/users/edit/:id', users.get);
 app.post('/users/update/:id', users.update);
+app.post('/users/register', users.register);
 app.post('/users/add', users.add);
 //app.post('/users/login', users.login);
 //this should be a post but this is only an illustration of CRUD - not on good practices
