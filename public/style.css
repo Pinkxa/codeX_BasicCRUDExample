@@ -9,28 +9,26 @@ body {
 
 h1{
 	text-align: center;
-	border: 5px solid #800080;
-	font-size: 130px;
-	background-color: #990033;
-	width: 100%;
-	height: 300px; 
+	border: 2px solid #800080;
+	font-size: 30px; 
 	margin-top: -1px;
+    font-family: 'Ribeye', cursive;
 
 }
 
 h2 {
      background-color: #195f77;
      border: 2px solid black;
-     border-radius: 15px;
      font-size: 40px;
-     width: 50%;
+     width: 30%;
+     margin-left: 200px;
 }
 
 #container{
 	margin-left: 200px;
 	width: auto;
 	height: 100%;
-	background-color: #990033;
+	background-color: #edc3c5;
 	margin-top: 60px;
 	margin-left: 30px;
 	margin-right: 30px;
@@ -41,8 +39,16 @@ h2 {
 
 }
 
+table {
+    margin-left: 200px;
+}
+
+table thead tr th {
+    font-size: 25px;
+}
+
 #add {
-	border : 2px solid black;
+	border : 1px solid white;
 	width: 65%;
 	padding: 10px;
 	border-radius: 15px;
@@ -51,12 +57,12 @@ h2 {
 input[type=text] {
 	margin: 10px;
 	padding: 10px;
-	font-size: 20px;
+	font-size: 15px;
 }
 
 input[type=submit] {
 	padding: 13px;
-  	border: 2px solid black; 
+  	border: 1px solid white; 
     margin-left: 50%; 	
 };
 
@@ -69,7 +75,7 @@ input[type=submit] {
 /* Toggle Styles */
 /* This sidebar modified by seegatesite.com */
  
-#wrapper {
+/*#wrapper {
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -83,10 +89,10 @@ input[type=submit] {
  
 #sidebar-wrapper {
     z-index: 1000;
-    position: fixed;
+    position: absolute;
     left: 250px;
     width: 0; /* disini agar ketika di kecilkan tidak hilang semua default 0*/
-    height: 100%;
+   /* height: 100%;
     margin-left: -250px;
     overflow-y: auto;
     background: #990033;
@@ -114,7 +120,7 @@ input[type=submit] {
 }
 /* Sidebar Styles */
  
-.sidebar-nav {
+/*.sidebar-nav {
     position: absolute;
     top: 0;
     width: 250px;
@@ -214,14 +220,7 @@ input[type=submit] {
         -o-transition: all 0.5s ease;
         transition: all 0.5s ease;
     }
-}
+}*/
 
-html{
-  background-image:url("The-life-you-love.jpg");
-  background-size:cover;
-  background-repeat:no-repeat;
-  background-attachment:fixed;
-  background-color:purple;
-  
-}
+
 

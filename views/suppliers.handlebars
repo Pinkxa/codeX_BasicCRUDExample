@@ -1,5 +1,6 @@
 <div class = "pretty">
 <h2>Suppliers</h2>
+{{#in_ca}}
 <table border = "2">
 	<thead>
       <tr>
@@ -12,8 +13,8 @@
 {{#suppliers}}
     <tr>
 	  <td><h3>{{shop}}</h3></td>
-	  <td><button><a href="/suppliers/edit/{{id}}">Edit</a></button></td>
-	  <td><button><a href="/suppliers/delete/{{id}}">Delete</a></button></td>
+	  <td><button type="button" class="btn btn-default"><a href="/suppliers/edit/{{id}}">Edit</a></button></td>
+	  <td><button type="button" class="btn btn-default"><a href="/suppliers/delete/{{id}}">Delete</a></button></td>
 	</tr>
 {{/suppliers}}
 </tbody>
@@ -31,4 +32,21 @@
 		<input type="submit">
 	</form>
 </div>
+{{/in_ca}}
+{{#action}}
+<table border = "2">
+	<thead>
+      <tr>
+        <th>SupplierName</th>
+      </tr>
+    </thead>
+  <tbody>
+{{#suppliers}}
+    <tr>
+	  <td><h3>{{shop}}</h3></td>
+	</tr>
+{{/suppliers}}
+</tbody>
+</table>
+{{/action}}
 </div>

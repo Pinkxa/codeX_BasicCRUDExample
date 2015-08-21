@@ -1,5 +1,6 @@
 <div class = "pretty">
 <h2>Users</h2>
+{{#in_ca}}
 <table border = "2">
   <thead>
       <tr>
@@ -41,4 +42,21 @@
     <input type="submit">
 	</form>
 </div>
+{{/in_ca}}
+{{#action}}
+<table border = "2">
+  <thead>
+      <tr>
+        <th>Username</th>
+      </tr>
+  </thead>
+  <tbody>
+{{#users}}
+  <tr>
+    <td><h3>{{Username}}</h3></td>
+  </tr> 
+{{/users}}
+</tbody>
+</table>
+{{/action}}
 </div>

@@ -1,5 +1,7 @@
 <div class = "pretty">
 <h2>Products</h2>
+
+{{#in_ca}}
 <table border = "2">
   <thead>
       <tr>
@@ -24,7 +26,6 @@
 {{#empty}}
   <p>The list is empty.</p>
 {{/empty}}
-
 <div id="add">
 	
 	<h2>Add a product</h2>
@@ -42,5 +43,24 @@
  
  
 </div>
+{{/in_ca}}
+{{#action}}
+<table border = "2">
+  <thead>
+      <tr>
+        <th>ProductName</th>
+        <th>CategoryName</th>
+      </tr>
+  </thead>
+  <tbody>
+{{#products}}
+  <tr>
+    <td><h3>{{name}}</h3></td>
+    <td><h3>{{catname}}</h3></td>
+  </tr> 
+{{/products}}
+</tbody>
+</table>
+{{/action}}
 </div>
 

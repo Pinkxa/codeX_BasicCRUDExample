@@ -16,11 +16,15 @@ exports.show = function (req, res, next) {
 	req.getConnection(function(err, connection){
 		if (err) 
 			return next(err);
+        var Admin = req.session.role === "admin";
+        var view = req.session.role !== "admin";
 		connection.query('SELECT * from users', [], function(err, results) {
         	if (err) return next(err);
 
     		res.render( 'users', {
-    			users : results
+    			users : results,
+                in_ca: Admin,
+                action: view
     		});
       });
 	});
@@ -74,6 +78,49 @@ exports.add = function(req, res, next) {
     addUser(req, addCallback);
 };
 
+exports.get = function(req, res, next){
+        var Id = req.params.User_role;
+        req.getConnection(function(err, connection){
+            connection.query('SELECT * FROM Users WHERE Role = ?', [Id], function(err,rows){
+                if(err){
+                        console.log("Error Selecting : %s ",err );
+                }
+                res.render('EditUser',{page_title:"Edit Customers - Node.js", data : rows[3]});   
+
+            }); 
+        });
+    };
+
+//updating a user
+exports.admin = function(req, res, next) {
+
+        var data = JSON.parse(JSON.stringify(req.body));
+        var id = req.params.Id;
+        req.getConnection(function(err, connection) {
+            connection.query('UPDATE Users SET Role = "admin" WHERE ID = ?', id, function(err, rows) {
+                if (err) {
+                    console.log("Error Updating : %s ", err);
+                }
+                res.redirect('/users');
+            });
+
+        });
+    };
+exports.notAdmin = function(req, res, next) {
+
+        var data = JSON.parse(JSON.stringify(req.body));
+        var id = req.params.Id;
+        req.getConnection(function(err, connection) {
+            connection.query('UPDATE Users SET Role = "view" WHERE ID = ?', id, function(err, rows) {
+                if (err) {
+                    console.log("Error Updating : %s ", err);
+                }
+                res.redirect('/users');
+            });
+
+        });
+    };
+
 exports.update = function(req, res, next){
 
 	var data = JSON.parse(JSON.stringify(req.body));
@@ -120,8 +167,9 @@ exports.login = function(req, res, next) {
                     }
 
                     if (pass) {
-
-                        return res.redirect("/home")
+                        req.session.user = username;
+                        req.session.role = user.Role;
+                        return res.render("index")
                     } else {
                         return res.redirect('/');
                     }

@@ -9,11 +9,17 @@ exports.show = function (req, res, next) {
 	req.getConnection(function(err, connection){
 		if (err) 
 			return next(err);
+		var Admin = req.session.role === "admin"
+            var user = req.session.role !== "admin"
+            console.log(req.session);
+            console.log(Admin);
 		connection.query('SELECT id, shop from suppliers', [], function(err, results) {
         	if (err) return next(err);
 
     		res.render( 'suppliers', {
-    			suppliers : results
+    			suppliers : results,
+    			in_ca : Admin,
+    			action : user
     		});
       });
 	});

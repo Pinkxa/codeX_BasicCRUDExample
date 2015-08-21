@@ -12,12 +12,18 @@ exports.show = function (req, res, next) {
         	//var products = results	
         connection.query('SELECT products.id AS id, products.name AS name, categories.catname AS catname FROM products, categories WHERE products.category_id = categories.id', [], function(err, results){
             if (err) return next(err);
-        connection.query('SELECT id, catname from categories', [], function(err, results1) {
+            var Admin = req.session.role === "admin"
+            var user = req.session.role !== "admin"
+            console.log(req.session);
+            console.log(Admin);
+        connection.query('SELECT * from categories', [], function(err, results1) {
             if (err) return next(err);
               //console.log(results1);
     		       res.render( 'home', {
     			      products : results,
-    			      categories : results1
+    			      categories : results1,
+                in_ca : Admin,
+                action : user
     		       });
         	})
        });
@@ -63,6 +69,35 @@ exports.get = function(req, res, next){
 		}); 
 	});
 };
+    //updating a user
+    exports.admin = function(req, res, next) {
+
+        var data = JSON.parse(JSON.stringify(req.body));
+        var id = req.params.Id;
+        req.getConnection(function(err, connection) {
+            connection.query('UPDATE Users SET Role = "admin" WHERE ID = ?', id, function(err, rows) {
+                if (err) {
+                    console.log("Error Updating : %s ", err);
+                }
+                res.redirect('/products');
+            });
+
+        });
+    };
+    exports.notAdmin = function(req, res, next) {
+
+        var data = JSON.parse(JSON.stringify(req.body));
+        var id = req.params.Id;
+        req.getConnection(function(err, connection) {
+            connection.query('UPDATE Users SET Role = "view" WHERE ID = ?', id, function(err, rows) {
+                if (err) {
+                    console.log("Error Updating : %s ", err);
+                }
+                res.redirect('/products');
+            });
+
+        });
+    };
 
 exports.update = function(req, res, next){
 

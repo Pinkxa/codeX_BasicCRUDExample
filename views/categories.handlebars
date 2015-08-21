@@ -1,5 +1,6 @@
 <div class = "pretty">
 <h2>Categories</h2>
+{{#in_ca}}
 <table border = "2">
 	<thead>
       <tr>
@@ -12,8 +13,8 @@
 {{#categories}}
 <tr>
   <td><h3>{{catname}}</h3></td>
-  <td><button><a href="/categories/edit/{{id}}">Edit</a></button></td>
-  <td><button><a href="/categories/delete/{{id}}">Delete</a></button></td>
+  <td><button type="button" class="btn btn-default"><a href="/categories/edit/{{id}}">Edit</a></button></td>
+  <td><button type="button" class="btn btn-default"><a href="/categories/delete/{{id}}">Delete</a></button></td>
  </tr>
 {{/categories}}
 </tbody>
@@ -31,4 +32,25 @@
 		<input type="submit">
 	</form>
 </div>
+{{/in_ca}}
+{{#action}}
+<table border = "2">
+  <thead>
+      <tr>
+        <th>CategoryName</th>
+      </tr>
+    </thead>
+<tbody>
+{{#categories}}
+<tr>
+  <td><h3>{{catname}}</h3></td>
+ </tr>
+{{/categories}}
+</tbody>
+</table>
+
+{{#empty}}
+  <p>The list is empty.</p>
+{{/empty}}
+{{/action}}
 </div>
