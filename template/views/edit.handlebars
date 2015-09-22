@@ -1,0 +1,14 @@
+<h2>Edit</h2>
+
+{{#data}}
+<form action="/products/update" method="POST">
+	Name:
+        <select name="product_id">
+		  {{#each products}}
+		     <option value="{{id}}">{{name}}</option>
+		  {{/each}}
+		</select> <br />
+
+	    <input type="submit">
+</form>
+{{/data}}
