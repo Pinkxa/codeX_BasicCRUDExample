@@ -4,6 +4,33 @@
  */	
 
 //todo - fix the error handling
+exports.search = function (req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err)
+            return next(err);
+        var searchQuery = req.params.query;
+        searchQuery = "%" + searchQuery + "%";
+        console.log(searchQuery);
+
+        var Admin = req.session.role === "admin"
+        var user = req.session.role !== "admin"
+
+        connection.query('SELECT * from categories where catname LIKE ?', searchQuery, function(err, results) {
+            if (err)
+                return next(err);
+            
+            console.log("***********")
+            console.log(results)
+
+            res.render('category', {
+                categories: results,
+                layout : false,
+                in_ca : Admin,
+                action : user
+        });
+    });
+});
+}
 
 exports.show = function (req, res, next) {
 	req.getConnection(function(err, connection){

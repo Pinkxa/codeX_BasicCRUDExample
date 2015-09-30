@@ -1,0 +1,23 @@
+
+{{#in_ca}}
+<table border = "2" id="productSearchResults">
+  <thead>
+      <tr>
+        <th>ProductName</th>
+        <th>CategoryName</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+  </thead>
+  <tbody>
+{{#products}}
+  <tr>
+    <td><h5>{{name}}</h5></td>
+    <td><h5>{{catname}}</h5></td>
+    <td><button type="button" class="btn btn-default"><a href="/products/edit/{{id}}">Edit</a></button></td>
+    <td><button type="button" class="btn btn-default"><a href="/products/delete/{{id}}">Delete</a></button></td>
+  </tr> 
+{{/products}}
+</tbody>
+</table>
+{{/in_ca}}

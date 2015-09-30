@@ -1,0 +1,20 @@
+{{#in_ca}}
+<table border = "2" id="supplierSearchResults">
+	<thead>
+      <tr>
+        <th>SupplierName</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+  <tbody>
+{{#suppliers}}
+    <tr>
+	  <td><h5>{{shop}}</h5></td>
+	  <td><button type="button" class="btn btn-default"><a href="/suppliers/edit/{{id}}">Edit</a></button></td>
+	  <td><button type="button" class="btn btn-default"><a href="/suppliers/delete/{{id}}">Delete</a></button></td>
+	</tr>
+{{/suppliers}}
+</tbody>
+</table>
+{{/in_ca}}

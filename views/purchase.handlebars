@@ -1,0 +1,21 @@
+<table border="2" id="purchaseSearchResults">
+    <thead>
+      <tr>
+        <th>ProductName</th>
+        <th>Date</th>
+        <th>SupplierName</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+
+{{#purchases}}
+<tbody>
+	<tr>
+	  <td><h5>{{name}}</h5></td>
+	  <td><h5>{{date}}</h5></td>
+	  <td><h5>{{shop}}</h5></td>
+	  <td><h5>{{price}}</h5></td>
+    </tr>
+</tbody>
+{{/purchases}}
+</table>

@@ -4,6 +4,33 @@
  */	
 
 //todo - fix the error handling
+exports.search = function (req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err)
+            return next(err);
+        var searchQuery = req.params.query;
+        searchQuery = "%" + searchQuery + "%";
+        console.log(searchQuery);
+
+        var Admin = req.session.role === "admin"
+        var user = req.session.role !== "admin"
+
+        connection.query('SELECT * from products where name LIKE ?', searchQuery, function(err, results) {
+            if (err)
+                return next(err);
+            
+            console.log("***********")
+            console.log(results)
+
+            res.render('product', {
+                products: results,
+                layout : false,
+                in_ca : Admin,
+                action : user
+        });
+    });
+});
+}
 
 exports.show = function (req, res, next) {
 	req.getConnection(function(err, connection){
@@ -22,8 +49,8 @@ exports.show = function (req, res, next) {
     		       res.render( 'home', {
     			      products : results,
     			      categories : results1,
-                in_ca : Admin,
-                action : user
+                      in_ca : Admin,
+                      action : user
     		       });
         	})
        });

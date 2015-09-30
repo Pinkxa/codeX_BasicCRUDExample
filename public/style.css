@@ -1,4 +1,4 @@
-body {
+/*body {
 	background-color: grey;
 	font-family: "Arial";
 	margin: 0px;
@@ -22,7 +22,7 @@ h2 {
      font-size: 40px;
      width: 30%;
      margin-left: 200px;
-}
+}*/
 
 #container{
 	margin-left: 200px;
@@ -39,13 +39,10 @@ h2 {
 
 }
 
-table {
-    margin-left: 200px;
-}
-
 table thead tr th {
-    font-size: 25px;
-}
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 20px;
 
 #add {
 	border : 1px solid white;
@@ -63,8 +60,12 @@ input[type=text] {
 input[type=submit] {
 	padding: 13px;
   	border: 1px solid white; 
-    margin-left: 50%; 	
+    margin-left: 50%; 
 };
+
+.button {
+    background-color: black;
+}
 
 /*!
  * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)

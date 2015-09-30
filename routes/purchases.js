@@ -4,6 +4,38 @@
  */	
 
 //todo - fix the error handling
+exports.search = function (req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err)
+            return next(err);
+        var searchQuery = req.params.query;
+        searchQuery = "%" + searchQuery + "%";
+        console.log(searchQuery);
+
+        var Admin = req.session.role === "admin"
+        var user = req.session.role !== "admin"
+
+        connection.query('SELECT name, id FROM products where name LIKE ?', searchQuery, function(err, results2) {
+        connection.query('SELECT shop, id FROM suppliers where shop LIKE ?', searchQuery, function(err, results1) {
+        connection.query("SELECT DATE_FORMAT(purchases.date,'%d %b %y') as date, purchases.price as price, purchases.product_id as id, purchases.supplier_id as id, products.name as name, suppliers.shop as shop from purchases, products, suppliers WHERE purchases.product_id = products.id and purchases.supplier_id = suppliers.id group by products.name", searchQuery, function(err, results) {
+          if (err) return next(err);
+
+            console.log("***********")
+            console.log(results)
+
+        res.render('purchase', {
+          purchases : results,
+          suppliers : results1,
+          products : results2,
+          layout : false,
+          in_ca : Admin,
+          action : user
+        });
+      });
+  });
+});
+});
+}
 
 exports.show = function (req, res, next) {
 	req.getConnection(function(err, connection){

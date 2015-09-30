@@ -1,0 +1,24 @@
+{{#in_ca}}
+<table id = "userSearchResults" border = "2">
+  <thead>
+      <tr>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Role</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+  </thead>
+  <tbody>
+{{#users}}
+  <tr>
+    <td><h5>{{Username}}</h5></td>
+    <td><h5>{{Password}}</h5></td>
+    <td><h5>{{Role}}</h5></td>
+    <td><button type="button" class="btn btn-default"><a href="/users/edit/{{Id}}">Edit</a></button></td>
+    <td><button type="button" class="btn btn-default"><a href="/users/delete/{{Id}}">Delete</a></button></td>
+  </tr> 
+{{/users}}
+</tbody>
+</table>
+{{/in_ca}}

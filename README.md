@@ -1,94 +1,26 @@
-#Introduction
+# [Start Bootstrap](http://startbootstrap.com/) - [Agency](http://startbootstrap.com/template-overviews/agency/)
 
-This is an example that shows the basics of how to create CRUD screens with NodeJS using EpxressJS and MySQL. CRUD stands for Create, Read, Update and Delete - this is the bread and butter of web application development. 
+[Agency](http://startbootstrap.com/template-overviews/agency/) is a one page agency portfolio theme for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/). This theme features several content sections, a responsive portfolio grid with hover effects, full page portfolio item modals, a responsive timeline, and a working PHP contact form.
 
-You use CRUD to manage all the data in your web application. Once data is stored it can be retrieved, updated, deleted or whatever your demanding cliet wants.
+## Getting Started
 
-I kept this example simple on purpose, but it can be used as the base of something much more complicated.
+To use this theme, choose one of the following options to get started:
+* Download the latest release on Start Bootstrap
+* Fork this repository on GitHub
 
-Fork this repo and clone it into a folder on your laptop and then follow these instructions.
+## Bugs and Issues
 
-#Setup
+Have a bug or an issue with this theme? [Open a new issue](https://github.com/IronSummitMedia/startbootstrap-agency/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/agency/).
 
-To run this example locally you will need to have installed
-* NodeJS
-* npm
-* MySql
-* A MySQL client - I recommend PHPMyAdmin
+## Creator
 
-You can use apt-get to install all of the above.
+Start Bootstrap was created by and is maintained by **David Miller**, Managing Partner at [Iron Summit Media Strategies](http://www.ironsummitmedia.com/).
 
-##Node JS
+* https://twitter.com/davidmillerskt
+* https://github.com/davidtmiller
 
-Open a terminal window to check if you need to install node & npm, by trying to run these two commands.
+Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
 
-On Ubuntu to install node & npm use this commands:
-* sudo apt-get install nodejs-legacy
-* sudo apt-get install npm
+## Copyright and License
 
-##Install MySQL
-
-Use these instructions to install MySQL & PHP on Ubuntu.
-
-https://www.digitalocean.com/community/tutorials/a-basic-mysql-tutorial
-
-## PhpMyAdmin
-
-You need a tool to administer your database, we will use PhpMyAdmin for that. It's a web application that allows you to administer you database.
-
-Use these instructions to install it:
-
-https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-on-ubuntu-14-04
-
-> If you have trouble running phpmyadmin locaclly after the installation it is most likely due to the fact that you didn't select the install options for Apache. When given the option to install to Apache config for phpmyadmin you need to select it explicitly using the spacebar. But all is not lost - reconfigure Apache and phpmyadmin by using this command ```sudo dpkg-reconfigure phpmyadmin``` on the command line. Be sure to select Apache this time around!
-
-## Database setup
-
-Once you have all the above installed you need to setup a database.
-
-To setup the database open a SQL window in PhpMyAdmin and run this sql:
-
-```
-CREATE DATABASE my_products;
-CREATE USER green_grocer@localhost IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON my_products.* TO green_grocer@localhost;
-FLUSH PRIVILEGES;
-```
-
-
-Once the database is created execute this SQL command in the database to create the products table. Be sure to run this in the newly created my_products database.
-
-```
-create table products (
-	id int not null auto_increment,
-        description char(100),
-        primary key(id)
-        
-);
-```
-
-Once done check if the table was create successfully. You can do that by running this sql command in the my_products database
-
-```
-select * from products
-```
-
-#Use it
-
-Now you should be ready to run the application.
-
-Open a terminal window in the root of the CRUD application and type
-
-```sudo npm install```
-
-This will install all the modules that the application depends on.
-
-To start the application:
-
-``` node index.js  ```
-
-If there were no errors open http://localhost:3000 in a web browser and Create, Read, Update and Delete some products.
-
-Use this as a basis for your own experiments, try to add more tables - link the tables together using SQL.
-
-The web pages use handlebar.js templates (http://handlebarsjs.com/) it's an extension of moustache (http://mustache.github.io/)
+Copyright 2013-2015 Iron Summit Media Strategies, LLC. Code released under the [Apache 2.0](https://github.com/IronSummitMedia/startbootstrap-agency/blob/gh-pages/LICENSE) license.
